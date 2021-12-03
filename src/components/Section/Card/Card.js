@@ -1,10 +1,9 @@
 import React from "react";
 import "./Card.css";
 import { Link } from "react-router-dom";
-export default function Card({ movie }) {
-  console.log(movie);
+export default function Card({ movie, content }) {
   return (
-    <Link className="text-decoration-none" to={"/movie/" + movie.id}>
+    <Link className="text-decoration-none" to={`/${content}/${movie.id}`}>
       <article
         className="Card"
         style={{
