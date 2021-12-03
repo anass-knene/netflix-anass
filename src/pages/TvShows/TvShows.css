@@ -1,0 +1,12 @@
+.TvShow {
+  display: flex;
+}
+.Seasons {
+  padding: 5px;
+}
+.Season {
+  padding: 5px;
+  background-color: black;
+  color: white;
+  margin-bottom: 5px;
+}
