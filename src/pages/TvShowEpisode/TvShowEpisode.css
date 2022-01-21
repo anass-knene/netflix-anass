@@ -4,12 +4,14 @@
   background-size: cover;
   padding: 5px;
 }
+
 .TvShowEpisode p,
 .TvShowEpisode h1,
 .TvShowEpisode h2 {
   color: white;
   background-color: rgba(0, 0, 0, 0.192);
 }
+
 .TvShowEpisode .Play {
   background-color: white;
   color: black;

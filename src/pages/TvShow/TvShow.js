@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import "./TvShow.css";
-import tvShowsArray from "../../api/tvShows";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 export default function TvShow() {
   const { tvShowId } = useParams();
-  const [tvShowObject, setTvShowObject] = useState();
-  const [tvShowSeason, setTvShowSeason] = useState();
+  const [tvShowObject, setTvShowObject] = useState({});
+  const [tvShowSeason, setTvShowSeason] = useState({});
+
   useEffect(() => {
-    const getTvShow = tvShowsArray.find((ele) => ele.id === tvShowId);
-    setTvShowObject(getTvShow);
-    setTvShowSeason(getTvShow.seasons[1]);
+    const getTvShowById = async () => {
+      const res = await fetch(`${backendURL}/tv-shows/${tvShowId}`);
+      const data = await res.json();
+      setTvShowObject(data);
+      setTvShowSeason(data?.seasons[0]);
+    };
+    getTvShowById();
   }, [tvShowId]);
 
   return (
     <div>
-      <h1> {tvShowObject?.title} </h1>
+      <h1>{tvShowObject?.title}</h1>
+
       <div className="TvShow">
         <div className="Seasons">
           {tvShowObject?.seasons?.map((el) => (
@@ -29,19 +35,19 @@ export default function TvShow() {
           ))}
         </div>
         <div className="Episodes">
-          {tvShowSeason?.episodes?.map((element) => (
-            <div key={element.id} className="Episode">
+          {tvShowSeason?.episodes?.map((el) => (
+            <div className="Episode" key={el.id}>
               <Link
-                to={`/tv-show-episode/${tvShowObject.id}/${tvShowSeason.id}/${element.id}`}
+                to={`/tv-show-episode/${tvShowObject.id}/${tvShowSeason.id}/${el.id}`}
               >
                 <img
                   className="EpisodeImage"
-                  src={element.image}
-                  alt="img"
-                  width="200px"
+                  src={el.image}
+                  alt=""
+                  width={200}
                 />
               </Link>
-              <span>{element.title}</span>
+              <span>{el.title}</span>
             </div>
           ))}
         </div>

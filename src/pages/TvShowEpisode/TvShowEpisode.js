@@ -1,37 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import { useParams } from "react-router";
-import tvShowsData from "../../api/tvShows";
 import "./TvShowEpisode.css";
+import { useParams } from "react-router-dom";
+//import tvShowsData from "../../api/tvShows";
+//import tvShows from "../../api/tvShows";
+import { Modal } from "react-bootstrap";
+
+const backendURL= process.env.REACT_APP_BACKEND_URL
 
 export default function TvShowEpisode() {
+
   const { tvShowId, seasonId, episodeId } = useParams();
   const [tvShow, setTvShow] = useState({});
   const [season, setSeason] = useState({});
   const [episode, setEpisode] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    const getTvShow = tvShowsData.find((el) => el.id === tvShowId);
-    setTvShow(getTvShow);
-    const getSeason = getTvShow.seasons.find((ele) => ele.id === seasonId);
-    setSeason(getSeason);
-    const getEpisode = getSeason.episodes.find(
-      (element) => element.id === episodeId
-    );
-    setEpisode(getEpisode);
+
+
+
+
+
+
+
+useEffect(() => {
+const getEpisodeById= async()=>{
+const res= await fetch(`${backendURL}/tv-show-episode/${tvShowId}/${seasonId}/${episodeId}`)
+const data = await res.json()
+setEpisode(data)
+
+}
+const getSeasonById=async()=>{
+  const res= await fetch(`${backendURL}/tv-show-season/${tvShowId}/${seasonId}`)
+  const data =await res.json()
+  setSeason(data)
+}
+
+
+const getTvShowById = async()=>{
+  const res= await fetch(`${backendURL}/tv-show/${tvShowId}`)
+  const data = await res.json()
+  setTvShow(data)
+}
+  getEpisodeById()
+  getSeasonById()
+  getTvShowById()
   }, [tvShowId, seasonId, episodeId]);
+
   return (
     <div
       className="TvShowEpisode"
-      style={{ backgroundImage: `url(${tvShow?.image})` }}
+      style={{ backgroundImage: `url(${tvShow.image})` }}
     >
       <h1>{tvShow.title}</h1>
       <h2>
-        {season.title}- {episode.title}
+        {season.title} - {episode.title}
       </h2>
       <div className="Play" onClick={() => setIsOpen(!isOpen)}>
-        Play
+        PLAY
       </div>
+
       <Modal
         onHide={() => setIsOpen(false)}
         show={isOpen}
@@ -43,9 +69,9 @@ export default function TvShowEpisode() {
           height="400"
           src={episode.video}
           title="YouTube video player"
-          frameBorder="0"
+          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+          allowFullscreen
         ></iframe>
       </Modal>
     </div>
