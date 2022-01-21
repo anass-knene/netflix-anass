@@ -1,5 +1,5 @@
 .Navbar {
-  /* border: 1px solid; */
+  /*border: 1px solid;*/
   padding: 5px;
   text-align: center;
   display: flex;
@@ -21,10 +21,12 @@
 .NavList li {
   cursor: pointer;
 }
+
 .NavList li a {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
 }
+
 .NavList li a:hover {
   text-decoration: underline;
 }

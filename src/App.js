@@ -7,9 +7,9 @@ import Home from "./pages/Home/Home";
 import Movies from "./pages/Movies/Movies";
 import TvShows from "./pages/TvShows/TvShows";
 import NotFound from "./pages/NotFound/NotFound";
-import Movie from "./components/Movie/Movie";
+import Movie from "./pages/Movie/Movie";
 import TvShow from "./pages/TvShow/TvShow";
-import TvShowEpisode from "./pages/TvSowEpisode/TvShowEpisode";
+import TvShowEpisode from "./pages/TvShowEpisode/TvShowEpisode";
 
 function App() {
   return (
@@ -33,5 +33,6 @@ function App() {
     </>
   );
 }
+//let pageId = '12311aasdc'
 
 export default App;
